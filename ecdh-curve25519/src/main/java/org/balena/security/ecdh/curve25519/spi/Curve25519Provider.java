@@ -1,4 +1,4 @@
-package com.twigo.app.purchase.djb;
+package org.balena.security.ecdh.curve25519.spi;
 
 import java.security.AccessController;
 import java.security.PrivilegedAction;

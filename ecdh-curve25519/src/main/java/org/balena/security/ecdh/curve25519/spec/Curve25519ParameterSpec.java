@@ -1,4 +1,4 @@
-package com.twigo.app.purchase.djb;
+package org.balena.security.ecdh.curve25519.spec;
 
 import java.io.Serializable;
 import java.security.spec.AlgorithmParameterSpec;

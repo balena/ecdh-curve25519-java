@@ -1,4 +1,9 @@
-package com.twigo.app.purchase.djb;
+package org.balena.security.ecdh.curve25519.spi;
+
+import org.balena.security.ecdh.curve25519.Curve25519;
+import org.balena.security.ecdh.curve25519.spec.Curve25519ParameterSpec;
+import org.balena.security.ecdh.curve25519.Curve25519PrivateKey;
+import org.balena.security.ecdh.curve25519.Curve25519PublicKey;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidParameterException;
@@ -7,7 +12,7 @@ import java.security.KeyPairGeneratorSpi;
 import java.security.SecureRandom;
 import java.security.spec.AlgorithmParameterSpec;
 
-import static com.twigo.app.purchase.djb.Curve25519.KEY_SIZE;
+import static org.balena.security.ecdh.curve25519.Curve25519.KEY_SIZE;
 
 public class Curve25519KeyPairGeneratorSpi extends KeyPairGeneratorSpi {
     private SecureRandom mSecureRandom;
