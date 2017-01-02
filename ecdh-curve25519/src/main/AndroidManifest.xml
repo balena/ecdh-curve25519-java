@@ -1,0 +1,6 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.balena.security.ecdh.curve25519">
+
+    <application/>
+
+</manifest>
