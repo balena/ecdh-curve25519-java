@@ -15,7 +15,15 @@ The minimum API level supported by this library is API 14 (Ice Cream Sandwich).
 
 ```gradle
 dependencies {
-    compile 'br.eti.balena:ecdh-curve25519:0.1.2'
+    compile 'br.eti.balena:ecdh-curve25519:0.1.3'
+}
+```
+
+The JCE Provider is provided as a separated module (you usually don't need it):
+
+```gradle
+dependencies {
+    compile 'br.eti.balena:ecdh-curve25519-spi:0.1.3'
 }
 ```
 
@@ -66,6 +74,7 @@ public class KeyExchangeTest {
     }
 }
 ```
+
 
 ## License
 
