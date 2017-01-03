@@ -1,4 +1,4 @@
-package org.balena.security.ecdh.curve25519.spec;
+package br.eti.balena.security.ecdh.curve25519.spec;
 
 import java.io.Serializable;
 import java.security.spec.AlgorithmParameterSpec;

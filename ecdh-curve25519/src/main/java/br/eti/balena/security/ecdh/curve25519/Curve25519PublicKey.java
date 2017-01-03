@@ -1,4 +1,4 @@
-package org.balena.security.ecdh.curve25519;
+package br.eti.balena.security.ecdh.curve25519;
 
 import android.support.annotation.NonNull;
 

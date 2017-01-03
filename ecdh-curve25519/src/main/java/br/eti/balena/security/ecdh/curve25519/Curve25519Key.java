@@ -1,10 +1,10 @@
-package org.balena.security.ecdh.curve25519;
+package br.eti.balena.security.ecdh.curve25519;
 
 import android.support.annotation.NonNull;
 
-import org.balena.security.ecdh.curve25519.spi.Curve25519Provider;
-
 import java.security.Key;
+
+import static br.eti.balena.security.ecdh.curve25519.Curve25519.ALGORITHM;
 
 class Curve25519Key implements Key {
     private byte[] mKey;
@@ -15,7 +15,7 @@ class Curve25519Key implements Key {
 
     @Override
     public String getAlgorithm() {
-        return Curve25519Provider.ALGORITHM;
+        return ALGORITHM;
     }
 
     @Override

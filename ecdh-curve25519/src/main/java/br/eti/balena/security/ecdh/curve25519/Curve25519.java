@@ -1,4 +1,4 @@
-package org.balena.security.ecdh.curve25519;
+package br.eti.balena.security.ecdh.curve25519;
 
 /* Ported from C to Java by Dmitry Skiba [sahn0], 23/02/08.
  * Original: http://cds.xs4all.nl:8081/ecdh/
@@ -11,6 +11,7 @@ package org.balena.security.ecdh.curve25519;
  */
 
 public class Curve25519 {
+    public static final String ALGORITHM = "curve25519";
 
     /* key size */
     public static final int KEY_SIZE = 32;

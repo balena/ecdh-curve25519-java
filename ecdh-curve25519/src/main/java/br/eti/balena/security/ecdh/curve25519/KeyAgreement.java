@@ -1,8 +1,6 @@
-package org.balena.security.ecdh.curve25519;
+package br.eti.balena.security.ecdh.curve25519;
 
 import android.support.annotation.NonNull;
-
-import org.balena.security.ecdh.curve25519.spi.Curve25519Provider;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -12,7 +10,8 @@ import java.security.PublicKey;
 import javax.crypto.SecretKey;
 import javax.crypto.ShortBufferException;
 
-import static org.balena.security.ecdh.curve25519.Curve25519.KEY_SIZE;
+import static br.eti.balena.security.ecdh.curve25519.Curve25519.ALGORITHM;
+import static br.eti.balena.security.ecdh.curve25519.Curve25519.KEY_SIZE;
 
 public class KeyAgreement {
     private byte[] mPrivateKey;
@@ -20,7 +19,7 @@ public class KeyAgreement {
 
     public KeyAgreement(@NonNull PrivateKey key) throws InvalidKeyException {
         if (!(key instanceof Curve25519PrivateKey)) {
-            throw new InvalidKeyException(Curve25519Provider.ALGORITHM
+            throw new InvalidKeyException(ALGORITHM
                     + " key agreement requires "
                     + Curve25519PrivateKey.class.getSimpleName() + " for initialization");
         }
@@ -29,7 +28,7 @@ public class KeyAgreement {
 
     public void doFinal(PublicKey key) throws InvalidKeyException {
         if (!(key instanceof Curve25519PublicKey)) {
-            throw new InvalidKeyException(Curve25519Provider.ALGORITHM
+            throw new InvalidKeyException(ALGORITHM
                     + " key agreement requires "
                     + Curve25519PublicKey.class.getSimpleName() + " for doFinal");
         }
@@ -57,7 +56,7 @@ public class KeyAgreement {
 
     public SecretKey generateSecret(String algorithm)
             throws IllegalStateException, NoSuchAlgorithmException, InvalidKeyException {
-        if (!algorithm.equals(Curve25519Provider.ALGORITHM))
+        if (!algorithm.equals(ALGORITHM))
             throw new NoSuchAlgorithmException("Unknown algorithm encountered: " + algorithm);
         return new Curve25519SecretKey(generateSecret());
     }

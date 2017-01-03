@@ -1,9 +1,9 @@
-package org.balena.security.ecdh.curve25519.spi;
+package br.eti.balena.security.ecdh.curve25519.spi;
 
-import org.balena.security.ecdh.curve25519.Curve25519;
-import org.balena.security.ecdh.curve25519.spec.Curve25519ParameterSpec;
-import org.balena.security.ecdh.curve25519.Curve25519PrivateKey;
-import org.balena.security.ecdh.curve25519.Curve25519PublicKey;
+import br.eti.balena.security.ecdh.curve25519.Curve25519;
+import br.eti.balena.security.ecdh.curve25519.spec.Curve25519ParameterSpec;
+import br.eti.balena.security.ecdh.curve25519.Curve25519PrivateKey;
+import br.eti.balena.security.ecdh.curve25519.Curve25519PublicKey;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidParameterException;
@@ -12,7 +12,8 @@ import java.security.KeyPairGeneratorSpi;
 import java.security.SecureRandom;
 import java.security.spec.AlgorithmParameterSpec;
 
-import static org.balena.security.ecdh.curve25519.Curve25519.KEY_SIZE;
+import static br.eti.balena.security.ecdh.curve25519.Curve25519.ALGORITHM;
+import static br.eti.balena.security.ecdh.curve25519.Curve25519.KEY_SIZE;
 
 public class Curve25519KeyPairGeneratorSpi extends KeyPairGeneratorSpi {
     private SecureRandom mSecureRandom;
@@ -35,7 +36,7 @@ public class Curve25519KeyPairGeneratorSpi extends KeyPairGeneratorSpi {
     @Override
     public KeyPair generateKeyPair() {
         if (mSecureRandom == null) {
-            throw new IllegalStateException(Curve25519Provider.ALGORITHM
+            throw new IllegalStateException(ALGORITHM
                     + " not initialised.");
         }
 

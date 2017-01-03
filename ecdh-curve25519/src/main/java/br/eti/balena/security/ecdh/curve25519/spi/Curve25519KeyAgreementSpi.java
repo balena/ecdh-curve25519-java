@@ -1,10 +1,10 @@
-package org.balena.security.ecdh.curve25519.spi;
+package br.eti.balena.security.ecdh.curve25519.spi;
 
-import org.balena.security.ecdh.curve25519.Curve25519;
-import org.balena.security.ecdh.curve25519.spec.Curve25519ParameterSpec;
-import org.balena.security.ecdh.curve25519.Curve25519PrivateKey;
-import org.balena.security.ecdh.curve25519.Curve25519PublicKey;
-import org.balena.security.ecdh.curve25519.Curve25519SecretKey;
+import br.eti.balena.security.ecdh.curve25519.Curve25519;
+import br.eti.balena.security.ecdh.curve25519.spec.Curve25519ParameterSpec;
+import br.eti.balena.security.ecdh.curve25519.Curve25519PrivateKey;
+import br.eti.balena.security.ecdh.curve25519.Curve25519PublicKey;
+import br.eti.balena.security.ecdh.curve25519.Curve25519SecretKey;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -17,7 +17,8 @@ import javax.crypto.KeyAgreementSpi;
 import javax.crypto.SecretKey;
 import javax.crypto.ShortBufferException;
 
-import static org.balena.security.ecdh.curve25519.Curve25519.KEY_SIZE;
+import static br.eti.balena.security.ecdh.curve25519.Curve25519.ALGORITHM;
+import static br.eti.balena.security.ecdh.curve25519.Curve25519.KEY_SIZE;
 
 public class Curve25519KeyAgreementSpi extends KeyAgreementSpi {
     private byte[] mPrivateKey;
@@ -49,15 +50,15 @@ public class Curve25519KeyAgreementSpi extends KeyAgreementSpi {
     protected Key engineDoPhase(Key key, boolean lastPhase)
             throws InvalidKeyException, IllegalStateException {
         if (mPrivateKey == null) {
-            throw new IllegalStateException(Curve25519Provider.ALGORITHM
+            throw new IllegalStateException(ALGORITHM
                     + " not initialised.");
         }
         if (!lastPhase) {
-            throw new IllegalStateException(Curve25519Provider.ALGORITHM
+            throw new IllegalStateException(ALGORITHM
                     + " can only be between two parties.");
         }
         if (!(key instanceof Curve25519PublicKey)) {
-            throw new InvalidKeyException(Curve25519Provider.ALGORITHM
+            throw new InvalidKeyException(ALGORITHM
                     + " key agreement requires "
                     + Curve25519PublicKey.class.getSimpleName() + " for doPhase");
         }
@@ -89,7 +90,7 @@ public class Curve25519KeyAgreementSpi extends KeyAgreementSpi {
     @Override
     protected SecretKey engineGenerateSecret(String algorithm)
             throws IllegalStateException, NoSuchAlgorithmException, InvalidKeyException {
-        if (!algorithm.equals(Curve25519Provider.ALGORITHM))
+        if (!algorithm.equals(ALGORITHM))
             throw new NoSuchAlgorithmException("Unknown algorithm encountered: " + algorithm);
         return new Curve25519SecretKey(engineGenerateSecret());
     }

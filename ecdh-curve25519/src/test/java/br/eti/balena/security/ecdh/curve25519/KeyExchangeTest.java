@@ -1,11 +1,12 @@
-package org.balena.security.ecdh.curve25519;
+package br.eti.balena.security.ecdh.curve25519;
 
-import org.balena.security.ecdh.curve25519.spi.Curve25519Provider;
 import org.junit.Test;
 
 import java.security.KeyPair;
+
 import javax.crypto.SecretKey;
 
+import static br.eti.balena.security.ecdh.curve25519.Curve25519.ALGORITHM;
 import static org.junit.Assert.assertArrayEquals;
 
 public class KeyExchangeTest {
@@ -24,8 +25,7 @@ public class KeyExchangeTest {
         // Now Bob obtains the sharedSecret2 in this manner:
         KeyAgreement keyAgreement2 = new KeyAgreement(keyPair2.getPrivate());
         keyAgreement2.doFinal(keyPair1.getPublic());
-        SecretKey sharedSecret2 = keyAgreement2.generateSecret(
-                Curve25519Provider.ALGORITHM);
+        SecretKey sharedSecret2 = keyAgreement2.generateSecret(ALGORITHM);
 
         // And, by using sharedSecret1, Bob can now encrypt the message.
 
@@ -33,8 +33,7 @@ public class KeyExchangeTest {
         // publicKey2 sent by Bob.
         KeyAgreement keyAgreement1 = new KeyAgreement(keyPair1.getPrivate());
         keyAgreement1.doFinal(keyPair2.getPublic());
-        SecretKey sharedSecret1 = keyAgreement1.generateSecret(
-                Curve25519Provider.ALGORITHM);
+        SecretKey sharedSecret1 = keyAgreement1.generateSecret(ALGORITHM);
 
         // Confirms that both shared secrets are equal.
         assertArrayEquals(sharedSecret1.getEncoded(),
