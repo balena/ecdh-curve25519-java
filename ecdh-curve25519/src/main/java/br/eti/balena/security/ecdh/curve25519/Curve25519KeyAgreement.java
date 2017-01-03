@@ -1,7 +1,5 @@
 package br.eti.balena.security.ecdh.curve25519;
 
-import android.support.annotation.NonNull;
-
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
@@ -13,11 +11,11 @@ import javax.crypto.ShortBufferException;
 import static br.eti.balena.security.ecdh.curve25519.Curve25519.ALGORITHM;
 import static br.eti.balena.security.ecdh.curve25519.Curve25519.KEY_SIZE;
 
-public class KeyAgreement {
+public class Curve25519KeyAgreement {
     private byte[] mPrivateKey;
     private byte[] mSharedSecret;
 
-    public KeyAgreement(@NonNull PrivateKey key) throws InvalidKeyException {
+    public Curve25519KeyAgreement(PrivateKey key) throws InvalidKeyException {
         if (!(key instanceof Curve25519PrivateKey)) {
             throw new InvalidKeyException(ALGORITHM
                     + " key agreement requires "

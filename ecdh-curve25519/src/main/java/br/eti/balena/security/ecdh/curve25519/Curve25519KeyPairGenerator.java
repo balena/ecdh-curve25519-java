@@ -1,20 +1,18 @@
 package br.eti.balena.security.ecdh.curve25519;
 
-import android.support.annotation.NonNull;
-
 import java.security.KeyPair;
 import java.security.SecureRandom;
 
 import static br.eti.balena.security.ecdh.curve25519.Curve25519.KEY_SIZE;
 
-public class KeyPairGenerator {
+public class Curve25519KeyPairGenerator {
     private SecureRandom mSecureRandom;
 
-    public KeyPairGenerator() {
+    public Curve25519KeyPairGenerator() {
         this(new SecureRandom());
     }
 
-    public KeyPairGenerator(@NonNull SecureRandom secureRandom) {
+    public Curve25519KeyPairGenerator(SecureRandom secureRandom) {
         mSecureRandom = secureRandom;
     }
 

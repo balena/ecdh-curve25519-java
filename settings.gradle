@@ -1,1 +1,1 @@
-include ':ecdh-curve25519'
+include ':ecdh-curve25519', ':ecdh-curve25519-spi'

@@ -28,8 +28,8 @@ import org.junit.Test;
 import java.security.KeyPair;
 import javax.crypto.SecretKey;
 
-import br.eti.balena.security.ecdh.curve25519.KeyAgreement;
-import br.eti.balena.security.ecdh.curve25519.KeyPairGenerator;
+import br.eti.balena.security.ecdh.curve25519.Curve25519KeyAgreement;
+import br.eti.balena.security.ecdh.curve25519.Curve25519KeyPairGenerator;
 
 import static br.eti.balena.security.ecdh.curve25519.Curve25519.ALGORITHM;
 import static org.junit.Assert.assertArrayEquals;
@@ -37,7 +37,7 @@ import static org.junit.Assert.assertArrayEquals;
 public class KeyExchangeTest {
     @Test
     public void keyExchangeTest() throws Exception {
-        KeyPairGenerator keyPairGenerator = new KeyPairGenerator();
+        Curve25519KeyPairGenerator keyPairGenerator = new Curve25519KeyPairGenerator();
 
         // Ana generates a key-pair as follows:
         KeyPair anaKeyPair = keyPairGenerator.generateKeyPair();
@@ -49,7 +49,7 @@ public class KeyExchangeTest {
         KeyPair bobKeyPair = keyPairGenerator.generateKeyPair();
 
         // Now Bob obtains the bobSharedSecret in this manner:
-        KeyAgreement bobKeyAgreement = new KeyAgreement(bobKeyPair.getPrivate());
+        Curve25519KeyAgreement bobKeyAgreement = new Curve25519KeyAgreement(bobKeyPair.getPrivate());
         bobKeyAgreement.doFinal(anaKeyPair.getPublic());
         SecretKey bobSharedSecret = bobKeyAgreement.generateSecret(ALGORITHM);
 
@@ -57,7 +57,7 @@ public class KeyExchangeTest {
 
         // At the Ana's side, the same shared secret is generated from the
         // public key sent by Bob.
-        KeyAgreement anaKeyAgreement = new KeyAgreement(anaKeyPair.getPrivate());
+        Curve25519KeyAgreement anaKeyAgreement = new Curve25519KeyAgreement(anaKeyPair.getPrivate());
         anaKeyAgreement.doFinal(bobKeyPair.getPublic());
         SecretKey anaSharedSecret = anaKeyAgreement.generateSecret(ALGORITHM);
 

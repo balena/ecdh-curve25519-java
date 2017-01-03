@@ -11,7 +11,8 @@ package br.eti.balena.security.ecdh.curve25519;
  */
 
 public class Curve25519 {
-    public static final String ALGORITHM = "curve25519";
+    public static final String ALGORITHM =
+            Curve25519.class.getSimpleName().toLowerCase();
 
     /* key size */
     public static final int KEY_SIZE = 32;

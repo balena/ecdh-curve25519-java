@@ -21,6 +21,26 @@ allprojects {
     repositories {
         jcenter()
     }
+    ext {
+        bintrayRepo = 'maven'
+        publishedGroupId = 'br.eti.balena'
+
+        siteUrl = 'https://github.com/balena/ecdh-curve25519-java'
+        gitUrl = 'https://github.com/balena/ecdh-curve25519-java.git'
+        issuesUrl = 'https://github.com/balena/ecdh-curve25519-java/issues'
+
+        allLabels = ['ecdh', 'curve25519', 'security', 'diffie-hellman']
+
+        libraryVersion = '0.1.3'
+
+        developerId = 'balena'
+        developerName = 'G. B. Versiani'
+        developerEmail = 'guibv@yahoo.com'
+
+        licenseName = 'The Apache Software License, Version 2.0'
+        licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+        allLicenses = ["Apache-2.0"]
+    }
 }
 
 task clean(type: Delete) {

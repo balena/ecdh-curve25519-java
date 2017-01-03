@@ -1,10 +1,10 @@
 apply plugin: 'com.android.library'
 
 ext {
-    bintrayName = 'ecdh-curve25519'
-    libraryName = 'ecdh-curve25519'
-    artifact = 'ecdh-curve25519'
-    libraryDescription = 'Diffie-Hellman key pair generator and key agreement for Curve25519'
+    bintrayName = 'ecdh-curve25519-spi'
+    libraryName = 'ecdh-curve25519-spi'
+    artifact = 'ecdh-curve25519-spi'
+    libraryDescription = 'Curve25519 DH as a JCE'
 }
 
 android {
@@ -31,6 +31,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.1.0'
+    compile project(':ecdh-curve25519')
     testCompile 'junit:junit:4.12'
 }
 

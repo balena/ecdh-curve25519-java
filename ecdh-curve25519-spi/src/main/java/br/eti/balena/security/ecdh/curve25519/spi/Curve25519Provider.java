@@ -22,9 +22,9 @@ public class Curve25519Provider extends Provider {
 
     protected void setup() {
         // see https://docs.oracle.com/javase/8/docs/technotes/guides/security/crypto/HowToImplAProvider.html
-        put("KeyPairGenerator." + ALGORITHM,
+        put("Curve25519KeyPairGenerator." + ALGORITHM,
                 Curve25519KeyPairGeneratorSpi.class.getCanonicalName());
-        put("KeyAgreement." + ALGORITHM,
+        put("Curve25519KeyAgreement." + ALGORITHM,
                 Curve25519KeyAgreementSpi.class.getCanonicalName());
     }
 }

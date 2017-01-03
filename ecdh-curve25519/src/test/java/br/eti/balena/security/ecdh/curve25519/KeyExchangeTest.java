@@ -12,7 +12,7 @@ import static org.junit.Assert.assertArrayEquals;
 public class KeyExchangeTest {
     @Test
     public void keyExchangeTest() throws Exception {
-        KeyPairGenerator keyPairGenerator = new KeyPairGenerator();
+        Curve25519KeyPairGenerator keyPairGenerator = new Curve25519KeyPairGenerator();
 
         // Ana generates a key-pair as follows:
         KeyPair keyPair1 = keyPairGenerator.generateKeyPair();
@@ -23,7 +23,7 @@ public class KeyExchangeTest {
         KeyPair keyPair2 = keyPairGenerator.generateKeyPair();
 
         // Now Bob obtains the sharedSecret2 in this manner:
-        KeyAgreement keyAgreement2 = new KeyAgreement(keyPair2.getPrivate());
+        Curve25519KeyAgreement keyAgreement2 = new Curve25519KeyAgreement(keyPair2.getPrivate());
         keyAgreement2.doFinal(keyPair1.getPublic());
         SecretKey sharedSecret2 = keyAgreement2.generateSecret(ALGORITHM);
 
@@ -31,7 +31,7 @@ public class KeyExchangeTest {
 
         // At the Ana's side, the same sharedSecret1 is generated from the
         // publicKey2 sent by Bob.
-        KeyAgreement keyAgreement1 = new KeyAgreement(keyPair1.getPrivate());
+        Curve25519KeyAgreement keyAgreement1 = new Curve25519KeyAgreement(keyPair1.getPrivate());
         keyAgreement1.doFinal(keyPair2.getPublic());
         SecretKey sharedSecret1 = keyAgreement1.generateSecret(ALGORITHM);
 

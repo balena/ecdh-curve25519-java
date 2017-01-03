@@ -1,15 +1,15 @@
 package br.eti.balena.security.ecdh.curve25519.spi;
 
-import br.eti.balena.security.ecdh.curve25519.Curve25519;
-import br.eti.balena.security.ecdh.curve25519.spec.Curve25519ParameterSpec;
+import br.eti.balena.security.ecdh.curve25519.Curve25519KeyAgreement;
 import br.eti.balena.security.ecdh.curve25519.Curve25519PrivateKey;
 import br.eti.balena.security.ecdh.curve25519.Curve25519PublicKey;
-import br.eti.balena.security.ecdh.curve25519.Curve25519SecretKey;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.security.spec.AlgorithmParameterSpec;
 
@@ -18,11 +18,9 @@ import javax.crypto.SecretKey;
 import javax.crypto.ShortBufferException;
 
 import static br.eti.balena.security.ecdh.curve25519.Curve25519.ALGORITHM;
-import static br.eti.balena.security.ecdh.curve25519.Curve25519.KEY_SIZE;
 
 public class Curve25519KeyAgreementSpi extends KeyAgreementSpi {
-    private byte[] mPrivateKey;
-    private byte[] mSharedSecret;
+    private Curve25519KeyAgreement mImplementation;
 
     @Override
     protected void engineInit(Key key, SecureRandom secureRandom) throws InvalidKeyException {
@@ -40,7 +38,7 @@ public class Curve25519KeyAgreementSpi extends KeyAgreementSpi {
         if (!(algorithmParameterSpec instanceof Curve25519ParameterSpec))
             throw new InvalidAlgorithmParameterException("Unknown parameter spec");
         if (key instanceof Curve25519PrivateKey) {
-            mPrivateKey = key.getEncoded();
+            mImplementation = new Curve25519KeyAgreement((PrivateKey)key);
         } else {
             throw new InvalidKeyException();
         }
@@ -49,7 +47,7 @@ public class Curve25519KeyAgreementSpi extends KeyAgreementSpi {
     @Override
     protected Key engineDoPhase(Key key, boolean lastPhase)
             throws InvalidKeyException, IllegalStateException {
-        if (mPrivateKey == null) {
+        if (mImplementation == null) {
             throw new IllegalStateException(ALGORITHM
                     + " not initialised.");
         }
@@ -62,36 +60,36 @@ public class Curve25519KeyAgreementSpi extends KeyAgreementSpi {
                     + " key agreement requires "
                     + Curve25519PublicKey.class.getSimpleName() + " for doPhase");
         }
-        mSharedSecret = new byte[KEY_SIZE];
-        Curve25519.curve(mSharedSecret, mPrivateKey, key.getEncoded());
+        mImplementation.doFinal((PublicKey)key);
         return null;
     }
 
     @Override
     protected byte[] engineGenerateSecret() throws IllegalStateException {
-        byte[] sharedSecret = new byte[KEY_SIZE];
-        try {
-            engineGenerateSecret(sharedSecret, 0);
-        } catch (ShortBufferException e) {
-            e.printStackTrace();
+        if (mImplementation == null) {
+            throw new IllegalStateException(ALGORITHM
+                    + " not initialised.");
         }
-        return sharedSecret;
+        return mImplementation.generateSecret();
     }
 
     @Override
     protected int engineGenerateSecret(byte[] bytes, int i)
             throws IllegalStateException, ShortBufferException {
-        if (bytes.length - i < KEY_SIZE)
-            throw new ShortBufferException();
-        System.arraycopy(mSharedSecret, 0, bytes, i, KEY_SIZE);
-        return KEY_SIZE;
+        if (mImplementation == null) {
+            throw new IllegalStateException(ALGORITHM
+                    + " not initialised.");
+        }
+        return mImplementation.generateSecret(bytes, i);
     }
 
     @Override
     protected SecretKey engineGenerateSecret(String algorithm)
             throws IllegalStateException, NoSuchAlgorithmException, InvalidKeyException {
-        if (!algorithm.equals(ALGORITHM))
-            throw new NoSuchAlgorithmException("Unknown algorithm encountered: " + algorithm);
-        return new Curve25519SecretKey(engineGenerateSecret());
+        if (mImplementation == null) {
+            throw new IllegalStateException(ALGORITHM
+                    + " not initialised.");
+        }
+        return mImplementation.generateSecret(algorithm);
     }
 }
