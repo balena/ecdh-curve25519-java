@@ -2,9 +2,9 @@
 
 This is a custom Diffie-Hellman key pair generator and a key agreement for the Curve25519 algorithm from Dan Bernstein, implemented as a Java Cryptography Extension (JCE).
 
-The core of the Curve25519 algorithm is a fork of (trevorbernard/curve25519-java)[https://github.com/trevorbernard/curve25519-java.git].
+The core of the Curve25519 algorithm is a fork of [trevorbernard/curve25519-java](https://github.com/trevorbernard/curve25519-java.git).
 
-The library contains a `KeyPairGenerator` and a `KeyAgreement` class to get access to the algorithms without registering the JCE provider, as it may require strict JAR signatures and system permissions to do so.
+The library contains custom `KeyPairGenerator` and `KeyAgreement` classes to get access to the algorithms without registering the JCE provider, as it may require strict JAR signatures and system permissions to do so. Of course, these custom classes are not suitable to integrate with TLS/SSL; they are provided for other custom key agreement mechanisms you may find useful.
 
 
 ## Gradle dependency
