@@ -7,6 +7,19 @@ The core of the Curve25519 algorithm is a fork of (trevorbernard/curve25519-java
 The library contains a `KeyPairGenerator` and a `KeyAgreement` class to get access to the algorithms without registering the JCE provider, as it may require strict JAR signatures and system permissions to do so.
 
 
+## Gradle depencency
+
+The Gradle dependency is available via (jCenter)[https://bintray.com/guibv/maven/br.eti.balena:ecdh-curve25519].
+
+The minimum API level supported by this library is API 14 (Ice Cream Sandwich).
+
+```gradle
+dependencies {
+    compile 'br.eti.balena:ecdh-curve25519:0.1.2'
+}
+```
+
+
 ## Usage
 
 ```java
@@ -14,6 +27,9 @@ import org.junit.Test;
 
 import java.security.KeyPair;
 import javax.crypto.SecretKey;
+
+import br.eti.balena.security.ecdh.curve25519.KeyAgreement;
+import br.eti.balena.security.ecdh.curve25519.KeyPairGenerator;
 
 import static br.eti.balena.security.ecdh.curve25519.Curve25519.ALGORITHM;
 import static org.junit.Assert.assertArrayEquals;
@@ -24,29 +40,29 @@ public class KeyExchangeTest {
         KeyPairGenerator keyPairGenerator = new KeyPairGenerator();
 
         // Ana generates a key-pair as follows:
-        KeyPair keyPair1 = keyPairGenerator.generateKeyPair();
+        KeyPair anaKeyPair = keyPairGenerator.generateKeyPair();
 
-        // Now Ana saves the privateKey for later, and sends the publicKey1 to Bob.
+        // Now Ana saves the privateKey for later, and sends the public key to Bob.
+        // The public key bytes are taken as anaKeyPair.getPublic().getEncoded().
 
         // Bob now generates his key pair:
-        KeyPair keyPair2 = keyPairGenerator.generateKeyPair();
+        KeyPair bobKeyPair = keyPairGenerator.generateKeyPair();
 
-        // Now Bob obtains the sharedSecret2 in this manner:
-        KeyAgreement keyAgreement2 = new KeyAgreement(keyPair2.getPrivate());
-        keyAgreement2.doFinal(keyPair1.getPublic());
-        SecretKey sharedSecret2 = keyAgreement2.generateSecret(ALGORITHM);
+        // Now Bob obtains the bobSharedSecret in this manner:
+        KeyAgreement bobKeyAgreement = new KeyAgreement(bobKeyPair.getPrivate());
+        bobKeyAgreement.doFinal(anaKeyPair.getPublic());
+        SecretKey bobSharedSecret = bobKeyAgreement.generateSecret(ALGORITHM);
 
-        // And, by using sharedSecret1, Bob can now encrypt the message.
+        // And, by using this shared secret, Bob can now encrypt the message.
 
-        // At the Ana's side, the same sharedSecret1 is generated from the
-        // publicKey2 sent by Bob.
-        KeyAgreement keyAgreement1 = new KeyAgreement(keyPair1.getPrivate());
-        keyAgreement1.doFinal(keyPair2.getPublic());
-        SecretKey sharedSecret1 = keyAgreement1.generateSecret(ALGORITHM);
+        // At the Ana's side, the same shared secret is generated from the
+        // public key sent by Bob.
+        KeyAgreement anaKeyAgreement = new KeyAgreement(anaKeyPair.getPrivate());
+        anaKeyAgreement.doFinal(bobKeyPair.getPublic());
+        SecretKey anaSharedSecret = anaKeyAgreement.generateSecret(ALGORITHM);
 
         // Confirms that both shared secrets are equal.
-        assertArrayEquals(sharedSecret1.getEncoded(),
-                sharedSecret2.getEncoded());
+        assertArrayEquals(anaSharedSecret.getEncoded(), bobSharedSecret.getEncoded());
     }
 }
 ```
