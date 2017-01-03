@@ -7,9 +7,9 @@ The core of the Curve25519 algorithm is a fork of (trevorbernard/curve25519-java
 The library contains a `KeyPairGenerator` and a `KeyAgreement` class to get access to the algorithms without registering the JCE provider, as it may require strict JAR signatures and system permissions to do so.
 
 
-## Gradle depencency
+## Gradle dependency
 
-The Gradle dependency is available via (jCenter)[https://bintray.com/guibv/maven/br.eti.balena:ecdh-curve25519].
+The Gradle dependency is available via [jCenter](https://bintray.com/guibv/maven/br.eti.balena:ecdh-curve25519).
 
 The minimum API level supported by this library is API 14 (Ice Cream Sandwich).
 
